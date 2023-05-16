@@ -37,7 +37,7 @@ template<typename It, typename T, typename Cmp>
 It lower_bound_pad(It begin, It end, const T& value, Cmp comp) {
     size_t n = end - begin;
     size_t b = -1;
-    for (size_t bit = std::bit_floor(n); bit != 0; bit >>= 1) {
+    for (size_t bit = std_bit_floor(n); bit != 0; bit >>= 1) {
         if (b + bit < n && comp(begin[b + bit], value)) b += bit;
     }
     return begin + (b + 1);
@@ -49,7 +49,7 @@ It lower_bound_overlap(It begin, It end, const T& value, Cmp comp) {
     size_t n = end - begin;
     if (n == 0) return begin;
 
-    size_t two_k = std::bit_floor(n);
+    size_t two_k = std_bit_floor(n);
     if (comp(begin[n / 2], value)) begin = end - (two_k - 1);
     
     size_t b = -1;
@@ -65,7 +65,7 @@ It lower_bound_opt(It begin, It end, const T& value, Cmp comp) {
     size_t n = end - begin;
     if (n == 0) return begin;
 
-    size_t two_r = std::bit_floor(n);
+    size_t two_r = std_bit_floor(n);
     size_t two_l = two_r - ((two_r >> 1) & ~n);
     bool use_r = comp(begin[two_l - 1], value);
     size_t two_k = use_r ? two_r : two_l;
