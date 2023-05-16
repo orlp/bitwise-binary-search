@@ -50,9 +50,7 @@ It lower_bound_overlap(It begin, It end, const T& value, Cmp comp) {
     if (n == 0) return begin;
 
     size_t two_k = std_bit_floor(n);
-    if (comp(begin[n / 2], value)) begin = end - (two_k - 1);
-    
-    size_t b = -1;
+    size_t b = comp(begin[n / 2], value) ? n - two_k : -1;
     for (size_t bit = two_k >> 1; bit != 0; bit >>= 1) {
         if (comp(begin[b + bit], value)) b += bit;
     }
